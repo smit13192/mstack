@@ -10,8 +10,10 @@ mongoose.connect(URL).then(() => {
 const UserModel = require('./src/model/user')
 
 async function run() {
-    const result = await UserModel.deleteMany({})
-    console.log(result)
+    const user = new UserModel({ name: "smit monpara", email: "smitmonpara2@gmail.com", age: 20 })
+    await user.save()
+    console.log(user)
+    console.log(user.getEmail())
 }
 
 run()
