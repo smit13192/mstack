@@ -62,8 +62,8 @@ const QuestionController = {
         }
     },
 
-    // get all question to user likes
-    getUserLikeQuestions: async function (req, res) {
+    // get all question's id to user likes
+    getUserLikeQuestionsId: async function (req, res) {
         try {
             const uid = req.params.uid
             const questions = await QuestionModel.find({ userLikes: { $in: uid } })
@@ -71,6 +71,19 @@ const QuestionController = {
                 return question._id
             })
             const response = { success: true, data: listOfQuestion }
+            return res.json(response)
+        } catch (e) {
+            const response = { success: false, message: e.message }
+            return res.json(response)
+        }
+    },
+
+    // get all question to user like
+    getUserLikeQuestions: async function (req, res) {
+        try {
+            const uid = req.body.uid
+            const questions = await QuestionModel.find({ userLikes: { $in: uid } })
+            const response = { success: true, data: questions }
             return res.json(response)
         } catch (e) {
             const response = { success: false, message: e.message }
