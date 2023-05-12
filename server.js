@@ -23,5 +23,8 @@ mongoose.connect(URL).then(() => {
 const userRouter = require('./src/router/user_router')
 app.use('/users',userRouter)
 
+const questionRouter = require('./src/router/question_router')
+app.use('/questions',questionRouter)
+
 const PORT = process.env.PORT || 5000
 app.listen(PORT,()=> console.log(`running port is ${PORT}`));
