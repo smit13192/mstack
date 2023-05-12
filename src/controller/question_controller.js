@@ -7,7 +7,31 @@ const QuestionController = {
             const data = req.body
             const question = new QuestionModel(data)
             await question.save()
-            const response = { success: true, data: question, message: "question add successfully" }
+            const response = { success: true, message: "question add successfully" }
+            return res.json(response)
+        } catch (e) {
+            const response = { success: false, message: e.message }
+            return res.json(response)
+        }
+    },
+
+    getAllQuestions: async function (req, res) {
+        try {
+            const questions = await QuestionModel.find()
+            const response = { success: true, data: questions }
+            return res.json(response)
+        } catch (e) {
+            const response = { success: false, message: e.message }
+            return res.json(response)
+        }
+    },
+
+    // get all user question
+    getUserQuestions: async function (req, res) {
+        try {
+            const uid = req.body.uid
+            const questions = await QuestionModel.find({ uid: uid })
+            const response = { success: true, data: questions }
             return res.json(response)
         } catch (e) {
             const response = { success: false, message: e.message }
@@ -23,13 +47,13 @@ const QuestionController = {
             if (foundQuestion) {
                 foundQuestion.removeLikes(uid)
                 await foundQuestion.save()
-                const response = { succes: true, data: foundQuestion, message: "like remove successfully" }
+                const response = { succes: true, message: "like remove successfully" }
                 return res.json(response)
             } else {
                 const question = await QuestionModel.findById(_id)
                 question.addLikes(uid)
                 await question.save()
-                const response = { succes: true, data: question, message: "like add successfully" }
+                const response = { succes: true, message: "like add successfully" }
                 return res.json(response)
             }
         } catch (e) {
@@ -39,11 +63,10 @@ const QuestionController = {
     },
 
     // get all question to user likes
-    getUserLikes: async function (req, res) {
+    getUserLikeQuestions: async function (req, res) {
         try {
             const uid = req.params.uid
             const questions = await QuestionModel.find({ userLikes: { $in: uid } })
-            console.log(questions)
             const listOfQuestion = questions.map((question) => {
                 return question._id
             })
@@ -59,8 +82,8 @@ const QuestionController = {
     deleteQuestion: async function (req, res) {
         try {
             const qid = req.params.qid
-            const question = await QuestionModel.deleteOne({ _id: qid })
-            const response = { succes: true, data: question, message: "question delete successfully" }
+            await QuestionModel.deleteOne({ _id: qid })
+            const response = { succes: true, message: "question delete successfully" }
             return res.json(response)
         } catch (e) {
             const response = { success: false, message: e.message }
