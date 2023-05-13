@@ -1,3 +1,4 @@
+const CategoryModel = require('../model/category_model')
 const QuestionModel = require('../model/question_model')
 
 const QuestionController = {
@@ -15,6 +16,7 @@ const QuestionController = {
         }
     },
 
+    // get all question
     getAllQuestions: async function (req, res) {
         try {
             const questions = await QuestionModel.find()
@@ -56,6 +58,33 @@ const QuestionController = {
                 const response = { succes: true, message: "like add successfully" }
                 return res.json(response)
             }
+        } catch (e) {
+            const response = { success: false, message: e.message }
+            return res.json(response)
+        }
+    },
+
+    // question by the category 
+    questionsByCategoryId: async function (req, res) {
+        try {
+            const cid = req.params.cid
+            const questions = await QuestionModel.find({ cid: cid })
+            const response = { success: true, data: questions }
+            return res.json(response)
+        } catch (e) {
+            const response = { success: false, message: e.message }
+            return res.json(response)
+        }
+    },
+
+    // question by the category name
+    questionsByCategoryName: async function (req, res) {
+        try {
+            const cname = req.body.name
+            const category = await CategoryModel.findOne({ name: cname })
+            const questions = await QuestionModel.find({ cid: category._id })
+            const response = { success: true, data: questions }
+            return res.json(response)
         } catch (e) {
             const response = { success: false, message: e.message }
             return res.json(response)

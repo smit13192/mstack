@@ -23,6 +23,9 @@ mongoose.connect(URL).then(() => {
 const userRouter = require('./src/router/user_router')
 app.use('/users',userRouter)
 
+const categoryRouter = require('./src/router/category_router')
+app.use('/categories',categoryRouter)
+
 const questionRouter = require('./src/router/question_router')
 app.use('/questions',questionRouter)
 
