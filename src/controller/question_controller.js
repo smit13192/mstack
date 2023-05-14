@@ -49,13 +49,13 @@ const QuestionController = {
             if (foundQuestion) {
                 foundQuestion.removeLikes(uid)
                 await foundQuestion.save()
-                const response = { succes: true, message: "like remove successfully" }
+                const response = { success: true, message: "like remove successfully" }
                 return res.json(response)
             } else {
                 const question = await QuestionModel.findById(_id)
                 question.addLikes(uid)
                 await question.save()
-                const response = { succes: true, message: "like add successfully" }
+                const response = { success: true, message: "like add successfully" }
                 return res.json(response)
             }
         } catch (e) {
@@ -125,7 +125,7 @@ const QuestionController = {
         try {
             const qid = req.params.qid
             await QuestionModel.deleteOne({ _id: qid })
-            const response = { succes: true, message: "question delete successfully" }
+            const response = { success: true, message: "question delete successfully" }
             return res.json(response)
         } catch (e) {
             const response = { success: false, message: e.message }

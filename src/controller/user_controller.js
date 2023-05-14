@@ -31,7 +31,7 @@ const UserController = {
                 const response = { success: false, message: "password is wrong" }
                 return res.json(response)
             }
-            const response = { succes: true, data: foundUser, message: "sigh in successfully" }
+            const response = { success: true, data: foundUser, message: "sigh in successfully" }
             return res.json(response)
         } catch (e) {
             const response = { success: false, message: e.message }
