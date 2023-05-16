@@ -42,7 +42,7 @@ const CategoryController = {
     // get category name and id
     getAllCategoryNameAndId: async function (req, res) {
         try {
-            const categories = await CategoryModel.find().select("name")
+            const categories = await CategoryModel.find().select("name").sort({ name: 1 })
             const response = { success: true, data: categories }
             return res.json(response)
         } catch (e) {
