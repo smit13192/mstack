@@ -20,6 +20,10 @@ mongoose.connect(URL).then(() => {
     console.log("connected succesfully")
 })
 
+app.use('/',(req,res)=>{
+    res.send('connect project')
+})
+
 
 const userRouter = require('./src/router/user_router')
 app.use('/users',userRouter)
