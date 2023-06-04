@@ -20,6 +20,7 @@ mongoose.connect(URL).then(() => {
     console.log("connected succesfully")
 })
 
+app.get('/',(req,res)=>res.send('Main Page'))
 
 const userRouter = require('./src/router/user_router')
 app.use('/users',userRouter)
