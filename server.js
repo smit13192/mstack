@@ -30,9 +30,6 @@ app.use('/categories',categoryRouter)
 const questionRouter = require('./src/router/question_router')
 app.use('/questions',questionRouter)
 
-app.use('/',(req,res)=>{
-    res.send('connect')
-})
 
 const PORT = process.env.PORT || 5000
 app.listen(PORT,()=> console.log(`running port is ${PORT}`));
